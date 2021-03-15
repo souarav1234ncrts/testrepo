@@ -23,6 +23,7 @@ app.use(cors());
 //routes
 
 const authroutes = require("./routes/Auth");
+const productroutes = require("./routes/Product");
 
 //middlewarrs
 
@@ -31,6 +32,7 @@ app.use(bodyParser.json());
 app.use(morgan("dev"));
 
 app.use("/api", authroutes);
+app.use("/api", productroutes);
 
 app.listen(port, () => {
   console.log(`Server running on Port - ${port}`);
