@@ -30,6 +30,7 @@ function Signup() {
   const signUp = () => {
     return (
       <>
+        <h1 style={{ textAlign: "center" }}>Sign up</h1>
         <div
           style={{
             height: "100px",

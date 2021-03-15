@@ -37,6 +37,7 @@ function Login() {
   const form = () => {
     return (
       <>
+        <h1 style={{ textAlign: "center" }}>Log IN</h1>
         <div
           className="card"
           style={{
