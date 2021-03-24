@@ -10,6 +10,7 @@ function Login() {
     password: "",
     error: false,
   });
+  const [check, setCheck] = useState(false);
 
   const { username, password, error } = value;
   const handleChange = (name) => (event) => {
@@ -28,12 +29,24 @@ function Login() {
         if (response.data.error) {
           setValue({ ...value, error: true });
         } else {
-          sessionStorage.setItem("JWT", response.data.token);
-          history.push("/dashboard");
+          if (check) {
+            sessionStorage.setItem("JWT", response.data.token);
+          } else {
+            localStorage.setItem("JWT", response.data.token);
+          }
+          localStorage.setItem("user", response.data.name);
+
+          history.push("/view");
         }
       });
   };
-
+  const handleCheck = () => {
+    if (check === true) {
+      setCheck(false);
+    } else {
+      setCheck(true);
+    }
+  };
   const form = () => {
     return (
       <>
@@ -71,7 +84,13 @@ function Login() {
           </div>
           <div className="form-group form-check">
             <label className="form-check-label">
-              <input className="form-check-input" type="checkbox" /> Remember me
+              <input
+                className="form-check-input"
+                type="checkbox"
+                value={check}
+                onChange={handleCheck}
+              />{" "}
+              Remember me
             </label>
           </div>
           <h5>

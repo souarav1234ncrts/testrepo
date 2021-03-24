@@ -9,6 +9,8 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { URL } from "../config/url";
 import axios from "axios";
+import { useHistory } from "react-router";
+import MaterialTable from "material-table";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -47,6 +49,7 @@ const useStyles = makeStyles({
 });
 
 export default function View() {
+  const history = useHistory();
   const [rows, setRows] = useState([]);
   const classes = useStyles();
 
@@ -59,35 +62,44 @@ export default function View() {
   useEffect(() => {
     loadData();
   }, []);
-
+  const logOut = () => {
+    localStorage.removeItem("JWT");
+    sessionStorage.removeItem("JWT");
+    history.push("/");
+  };
+  const nextPage = () => {
+    history.push("/update");
+  };
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>productId</StyledTableCell>
-            <StyledTableCell align="right">productName</StyledTableCell>
-            <StyledTableCell align="right">productPrice</StyledTableCell>
-            <StyledTableCell align="right">productQuantity</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
-              <StyledTableCell component="th" scope="row">
-                {row.productId}
-              </StyledTableCell>
-              <StyledTableCell align="right">{row.productName}</StyledTableCell>
-              <StyledTableCell align="right">
-                {row.productPrice}
-              </StyledTableCell>
-              <StyledTableCell align="right">
-                {row.productQuantity}
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      <h2>{localStorage.getItem("user")}</h2>
+      <button
+        className="btn btn-success"
+        onClick={() => {
+          logOut();
+        }}
+      >
+        Log out
+      </button>
+     
+        <button
+          className="btn btn-success"
+          onClick={() => {
+            nextPage();
+          }}
+        >
+          Next page
+        </button>
+      
+      <MaterialTable
+        columns={[
+          { title: "productName", field: "productName" },
+          { title: "product price", field: "productPrice" },
+          { title: "Product Quantity", field: "productQuantity" },
+        ]}
+        data={rows}
+        title="Demo Title"
+      />
+    </>
   );
 }

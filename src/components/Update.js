@@ -9,6 +9,8 @@ function Update() {
   const [text, setText] = useState("");
   const [array, setArray] = useState([]);
   const [product, setProduct] = useState(null);
+  var [img, setImg] = useState("rice");
+  var url = ""
 
   const loadText = () => {
     axios.get(`${URL}/viewproduct`).then((response) => {
@@ -26,85 +28,31 @@ function Update() {
       setProduct(response.data);
     });
   };
-    const updateProduct = () => {
-       axios
-         .put(`${URL}/updateproduct`,{productName:product.productName,productId:product.productId,productPrice:product.productPrice,productQuantity:product.productQuantity})
-         .then((response) => {
-           alert("product updated successfully");
-         });
+  const updateProduct = () => {
+    axios
+      .put(`${URL}/updateproduct`, {
+        productName: product.productName,
+        productId: product.productId,
+        productPrice: product.productPrice,
+        productQuantity: product.productQuantity,
+      })
+      .then((response) => {
+        alert("product updated successfully");
+      });
   };
-    const updateChange = (name) =>(event)=> {
-        setProduct({...product,[name]:event.target.value})
-    }
+  const updateChange = (name) => (event) => {
+    setProduct({ ...product, [name]: event.target.value });
+  };
+  const imagePreview = () => {};
   const body = () => {
     return (
       <>
-        <TextField
-          id="outlined-select-currency-native"
-          select
-          label="Native select"
-          value={text}
-          onChange={handleChange}
-          SelectProps={{
-            native: true,
+        <input
+          type="file"
+          onChange={(e) => {
           }}
-          helperText="Please select your product"
-          variant="outlined"
-        >
-          {array.map((option) => (
-            <option key={option.productName} value={option.productId}>
-              {option.productName}
-            </option>
-          ))}
-        </TextField>
-        <button
-          className="btn btn-success"
-          onClick={() => {
-            getDetails();
-          }}
-        >
-          Search
-        </button>
-        {product ? (
-          <>
-            <TextField
-              id="outlined-basic"
-              label="Outlined"
-              variant="outlined"
-              value={product.productName}
-              onChange={updateChange()}
-            />
-            <TextField
-              id="outlined-basic"
-              label="Outlined"
-              variant="outlined"
-              value={product.productId}
-              onChange={updateChange()}
-            />
-            <TextField
-              id="outlined-basic"
-              label="Outlined"
-              variant="outlined"
-              value={product.productPrice}
-              onChange={updateChange()}
-            />
-            <TextField
-              id="outlined-basic"
-              label="Outlined"
-              variant="outlined"
-              value={product.productQuantity}
-              onChange={updateChange()}
-            />
-            <button
-              className="btn btn-success"
-              onClick={() => {
-                updateProduct();
-              }}
-            >
-              Update
-            </button>
-          </>
-        ) : null}
+        />
+        {img != "" ? <img src={img} alt="then" /> : null}
       </>
     );
   };

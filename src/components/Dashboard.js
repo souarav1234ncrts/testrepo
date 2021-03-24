@@ -5,6 +5,7 @@ function Dashboard() {
   const body = () => {
     return (
       <>
+        {/* <h2>{localStorage.getItem('user')}</h2> */}
         <div className="row my-50">
           <div className="col-md-4">
             <Link to="/create">
