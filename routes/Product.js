@@ -8,9 +8,12 @@ const {
   removeProduct,
   viewProductbyId,
 } = require("../controller/Product");
+const { uploadImage } = require("../controller/image");
 const { remove } = require("../models/User");
+const upload = require("../middleware/upload");
 
 router.post("/createproduct", createProduct);
+router.post("/uploadphoto", upload.single("photo"), uploadImage);
 
 router.get("/viewproduct", viewProduct);
 router.get("/viewproductbyid/:productId", viewProductbyId);
